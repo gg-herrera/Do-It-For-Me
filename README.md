@@ -1,2 +1,2 @@
 # Do-It-For-Me
-Small Script For Simplify Windows App Downloads
+Small Script To Simplify Windows App Downloads
