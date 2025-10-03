@@ -18,6 +18,7 @@ If (-Not $ADMIN) {
 Write-Host "Starting the setup process..."
 
 $EnvChocoInstall = "C:\ProgramData\chocolatey"
+$EnvTempChocoData = "C:\Users\$env:USERNAME\AppData\Local\Temp\chocolatey"
 if (-Not (Test-Path $EnvChocoInstall)) {
     Write-Host "Chocolatey Not Found. Using Temporary Install..."
     Invoke-WebRequest https://community.chocolatey.org/install.ps1 -UseBasicParsing | Invoke-Expression
@@ -225,6 +226,8 @@ try {
     if (Test-Path $EnvChocoInstall) {
         Write-Host "Cleaning up temporary Chocolatey installation..."
         Remove-Item $EnvChocoInstall -Recurse -Force
+        Remove-Item $EnvTempChocoData -Recurse -Force
+        Write-Host "Chocolatey Installation Cleaning Was Successful"
     }
 }
 catch {
