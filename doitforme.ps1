@@ -5,7 +5,7 @@ Add-Type -AssemblyName System.Drawing
 Write-Host "Welcome to Do It For Me! ->"
 $OS = (Get-ComputerInfo).OsName
 if ($OS -like "*Windows*") {
-    Write-Host "Windows Machine detected."
+    Write-Host "$OS Machine detected."
 } else {
     Write-Error "This script is intended for Windows machines only. Exiting from $OS ..."
     exit 1
@@ -131,7 +131,6 @@ function Install-Application {
                 Write-Host $process
             } else {
                 Write-Host "$App installed successfully."
-                ShowTopMessage -Message "Installation complete!" -Title "Success"
             }
         }
   
@@ -158,12 +157,12 @@ function handleChecked {
         return
     }
 
-    $InstallBtn.Enabled = $false
+    $Form.BackColor = [System.Drawing.Color]::BlueViolet
     try {
         Install-Application -AppNames $selected
     }
     finally {
-        $InstallBtn.Enabled = $true
+        $Form.BackColor = [System.Drawing.Color]::Black
     }
 }
 
@@ -204,7 +203,6 @@ foreach ($App in $AppDB.Keys) {
 
     $Form.Controls.Add($CheckBox)
 }
-
 $InstallBtn = New-Object System.Windows.Forms.Button
 $InstallBtn.Text = "Install application(s)"
 $InstallBtn.BackColor = [System.Drawing.Color]::Green
@@ -213,11 +211,22 @@ $InstallBtn.Location = New-Object System.Drawing.Point(50, 300)
 $InstallBtn.Size = New-Object System.Drawing.Size(120, 30)
 
 $Form.Controls.Add($InstallBtn)
-$Form.ShowDialog() | Out-Null
-$Form.Dispose()
-$InstallBtn.Location = New-Object System.Drawing.Point(50, 300)
-$InstallBtn.Size = New-Object System.Drawing.Size(120, 30)
 
-$Form.Controls.Add($InstallBtn)
-$Form.ShowDialog() | Out-Null
-$Form.Dispose()
+# Show form and clean up
+try {
+    $Form.ShowDialog() | Out-Null
+}
+finally {
+    if ($Form) {
+        $Form.Dispose()
+    }
+}
+try {
+    if (Test-Path $EnvChocoInstall) {
+        Write-Host "Cleaning up temporary Chocolatey installation..."
+        Remove-Item $EnvChocoInstall -Recurse -Force
+    }
+}
+catch {
+    Write-Warning "Failed to clean up Chocolatey installation: $_"
+}
