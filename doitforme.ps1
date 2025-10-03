@@ -128,6 +128,7 @@ function Install-Application {
             if ($process.ExitCode -ne 0) {
                 ShowTopMessage -Message "Installation of $App failed with exit code $($process.ExitCode)." -Title "Error"
                 Write-Error "Installation of $App failed with exit code $($process.ExitCode)."
+                Write-Host $process
             } else {
                 Write-Host "$App installed successfully."
                 ShowTopMessage -Message "Installation complete!" -Title "Success"
@@ -208,6 +209,12 @@ $InstallBtn = New-Object System.Windows.Forms.Button
 $InstallBtn.Text = "Install application(s)"
 $InstallBtn.BackColor = [System.Drawing.Color]::Green
 $InstallBtn.Add_Click({ handleChecked })
+$InstallBtn.Location = New-Object System.Drawing.Point(50, 300)
+$InstallBtn.Size = New-Object System.Drawing.Size(120, 30)
+
+$Form.Controls.Add($InstallBtn)
+$Form.ShowDialog() | Out-Null
+$Form.Dispose()
 $InstallBtn.Location = New-Object System.Drawing.Point(50, 300)
 $InstallBtn.Size = New-Object System.Drawing.Size(120, 30)
 
