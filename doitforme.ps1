@@ -20,7 +20,7 @@ Write-Host "Starting the setup process..."
 $EnvChocoInstall = "C:\ProgramData\chocolatey"
 if (-Not (Test-Path $EnvChocoInstall)) {
     Write-Host "Chocolatey Not Found. Using Temporary Install..."
-    Invoke-WebRequest https://comunity.chocolatey.org/install.ps1 -UseBasicParsing | Invoke-Expression
+    Invoke-WebRequest https://community.chocolatey.org/install.ps1 -UseBasicParsing | Invoke-Expression
 } else {
     Write-Host "Chocolatey Found. Using Existing Install..."
 }
