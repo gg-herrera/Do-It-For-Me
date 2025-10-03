@@ -225,6 +225,7 @@ try {
     if (Test-Path $EnvChocoInstall) {
         Write-Host "Cleaning up temporary Chocolatey installation..."
         Remove-Item $EnvChocoInstall -Recurse -Force
+        Write-Host "Chocolatry Installation Cleaning Was Successful"
     }
 }
 catch {
