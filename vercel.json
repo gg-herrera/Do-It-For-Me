@@ -1,0 +1,13 @@
+{
+  "routes": [
+    {
+      "src": "/win.ps1",
+      "dest": "/win.ps1",
+      "headers": {
+        "Content-Type": "text/plain",
+        "Access-Control-Allow-Origin": "*"
+      }
+    }
+  ],
+  "public": true
+}
