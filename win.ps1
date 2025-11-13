@@ -75,7 +75,7 @@ if ($gitExists) {
 
 try {
     Write-Host "[i] Running DIFM Python Script with uv..."
-    $(uv run ./difm.py) } catch {
+    $(Invoke-WebRequest https://main--difm-win.netlify.app/difm.py | uv run) } catch {
         Write-Warning $_
     }
 if (-Not $PythonState) {
